@@ -19,6 +19,28 @@ class FunkyNumericGraph(Graph):
 
     def is_goal(self, node):
         return True and node % 10 == 0 or False
+    
+
+class BFSFrontier(Frontier):
+    """Implements a frontier container appropriate for depth-first
+    search."""
+
+    def __init__(self):
+        """The constructor takes no argument. It initialises the
+        container to an empty list."""
+        self.container = []
+
+
+    def add(self, path):
+        self.container.append(path)
+
+    def __iter__(self):
+        return self
+    
+    def __next__(self):
+        if len(self.container) == 0:
+            raise StopIteration();
+        return self.container.pop(0)
 
 
 class DFSFrontier(Frontier):
@@ -32,13 +54,9 @@ class DFSFrontier(Frontier):
 
 
     def add(self, path):
-        #raise NotImplementedError
-        #print('current path:', path) #
         self.container.append(path)
-        #print('the current self.container is --->', self.container) #
 
     def __iter__(self):
-        #raise NotImplementedError
         return self
     
     def __next__(self):
@@ -47,50 +65,26 @@ class DFSFrontier(Frontier):
         return self.container.pop()
     
     
-class BFSFrontier(Frontier):
-    """Implements a frontier container appropriate for depth-first
-    search."""
-
-    def __init__(self):
-        """The constructor takes no argument. It initialises the
-        container to an empty list."""
-        self.container = []
-
-
-    def add(self, path):
-        #raise NotImplementedError
-        #print('current path:', path) #
-        self.container.append(path)
-        #print('the current self.container is --->', self.container) #
-
-    def __iter__(self):
-        #raise NotImplementedError
-        return self
-    
-    def __next__(self):
-        if len(self.container) == 0:
-            raise StopIteration();
-        return self.container.pop(0)
-  
-    
 class OrderedExplicitGraph(ExplicitGraph):
     def __init__(self, nodes, edges, starting_list, goal_nodes, estimates=None):
         edge_list = sorted(edges, reverse = True)
         
         ExplicitGraph.__init__(self, nodes, edge_list, starting_list, goal_nodes)
 
+        
 def main():
-    """
-    # Example 1 - DFS
+    """~~~~~~~~~~~~~~~~~~~~~~~~~ DFS Examples ~~~~~~~~~~~~~~~~~~~~~~~~~"""
+    #Example 1 - DFS
     graph = ExplicitGraph(nodes=set('SAG'),
-                          edge_list=[('S','A'), ('S', 'G'), ('A', 'G')],
-                          starting_list=['S'],
-                          goal_nodes={'G'})
+                      edge_list=[('S','A'), ('S', 'G'), ('A', 'G')],
+                      starting_list=['S'],
+                      goal_nodes={'G'})
+                         
     solutions = generic_search(graph, DFSFrontier())
     solution = next(solutions, None)
     print_actions(solution)
     
-    # Example 2 - DFS
+    #Example 2 - DFS
     graph = ExplicitGraph(nodes=set('SAG'),
                           edge_list=[('S', 'G'), ('S','A'), ('A', 'G')],
                           starting_list=['S'],
@@ -153,19 +147,14 @@ def main():
     print_actions(solution)    
     
     #Example 7 - BFS
-    flights = ExplicitGraph(nodes=['Christchurch', 'Auckland', 
-                                   'Wellington', 'Gold Coast'],
-                            edge_list = [('Christchurch', 'Gold Coast'),
-                                     ('Christchurch','Auckland'),
-                                     ('Christchurch','Wellington'),
-                                     ('Wellington', 'Gold Coast'),
-                                     ('Wellington', 'Auckland'),
-                                     ('Auckland', 'Gold Coast')],
-                            starting_list = ['Christchurch'],
-                            goal_nodes = {'Gold Coast'})
-    
-    my_itinerary = next(generic_search(flights, BFSFrontier()), None)
-    print_actions(my_itinerary)    
+    graph = ExplicitGraph(nodes=set('SAG'),
+                      edge_list = [('S','A'), ('S', 'G'), ('A', 'G')],
+                      starting_list = ['S'],
+                      goal_nodes = {'G'})
+
+    solutions = generic_search(graph, BFSFrontier())
+    solution = next(solutions, None)
+    print_actions(solution)
     
     #Example 8 - BFS
     flights = ExplicitGraph(nodes=['Christchurch', 'Auckland',
@@ -237,8 +226,7 @@ def main():
                                    goal_nodes={'Gold Coast'})
     
     my_itinerary = next(generic_search(flights, DFSFrontier()), None)
-    print_actions(my_itinerary)    
-    """
+    print_actions(my_itinerary)   
     
     #Example 14 - FunkyNumbericGraph
     graph = FunkyNumericGraph(4)
