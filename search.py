@@ -62,7 +62,7 @@ class Graph(metaclass=ABCMeta):
         """
 
     #@abstractmethod
-    #def outgoing_arcs(self, tail_node):
+    def outgoing_arcs(self, tail_node):
         """Given a node it returns a sequence of arcs (Arc objects)
         which correspond to the actions that can be taken in that
         state (node)."""
@@ -115,16 +115,13 @@ class ExplicitGraph(Graph):
 
     def is_goal(self, node):
         """Returns true if the given node is a goal node."""
-        #print("node", node, "is in self.goal_nodes??? ----->", node in self.goal_nodes) #
         return node in self.goal_nodes
 
     def outgoing_arcs(self, node):
         """Returns a sequence of Arc objects corresponding to all the
         edges in which the given node is the tail node. The label is
         automatically generated."""
-        
-        #print('the edge_list is', self.edge_list) #
-        
+                
         for edge in self.edge_list:
             if len(edge) == 2:  # if no cost is specified
                 tail, head = edge
