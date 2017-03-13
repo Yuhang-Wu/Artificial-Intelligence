@@ -1,5 +1,4 @@
 from search import *
-import math
 import heapq
 
 class MapGraph(Graph):
@@ -59,10 +58,13 @@ class MapGraph(Graph):
         for row in self.rows:
             for col in row:
                 if col == 'G':
-                    #h_cost = max(abs(self.rows.index(row)-row_n), 
-                                 #abs(row.index(col)-col_n))
-                    h_cost = math.sqrt(pow(self.rows.index(row)-row_n, 2) + 
-                                       pow(row.index(col)-col_n,2))
+                    
+                    h_cost = max(abs(self.rows.index(row)-row_n), 
+                                 abs(row.index(col)-col_n))
+                    
+                    #better estimation but not adjust in this lab
+                    #h_cost = math.sqrt(pow(self.rows.index(row)-row_n, 2) + 
+                                       #pow(row.index(col)-col_n,2))
                     
         return h_cost
     
@@ -92,7 +94,6 @@ class AStarFrontier(Frontier):
         
     def __iter__(self):
         return self
-    
     def __next__(self):
         while len(self.container) > 0:
             solution = heapq.heappop(self.container)[-1]   
@@ -121,28 +122,28 @@ class LCFSFrontier(Frontier):
 
     def __iter__(self):
         return self
-
+    
     def __next__(self):
-        if len(self.container) == 0:
-            raise StopIteration();
-        solution = heapq.heappop(self.container)[-1]
-        
-        if solution[-1] not in self.visited:
-            self.visited.append(solution[-1].head)
-        return solution
-
-
+        while len(self.container) > 0:
+            solution = heapq.heappop(self.container)[-1]   
+            if solution[-1].head not in self.visited:
+                self.visited.append(solution[-1].head)
+                return solution
+        raise StopIteration();
+    
+    
 def print_map(map_graph, frontier, solution):
     
     SG = {'S', 'G'}
     star, dot = '*', '.'
     cur_row, cur_col = 0, 0
     
-    if solution:
-        for row in map_graph.rows:
-            for col in row:
-                cur_pos = (cur_row, cur_col)
-                
+    #if solution:
+    for row in map_graph.rows:
+        for col in row:
+            cur_pos = (cur_row, cur_col)
+            
+            if solution:  
                 for edge in solution:
                     head_row, head_col = edge.head
                     
@@ -150,15 +151,16 @@ def print_map(map_graph, frontier, solution):
                        and map_graph.rows[head_row][head_col] not in SG:
                         map_graph.rows[head_row][head_col] = star
                         
-                for visit in frontier.visited:
-                    visit_row, visit_col = visit
-                    if visit == cur_pos \
-                       and map_graph.rows[visit_row][visit_col] not in SG \
-                       and map_graph.rows[visit_row][visit_col] != star:
-                        map_graph.rows[visit_row][visit_col] = dot
+            for visit in frontier.visited:
+                visit_row, visit_col = visit
                 
-                cur_col += 1
-            cur_row, cur_col = cur_row + 1, 0
+                if visit == cur_pos \
+                   and map_graph.rows[visit_row][visit_col] not in SG \
+                   and map_graph.rows[visit_row][visit_col] != star:
+                    map_graph.rows[visit_row][visit_col] = dot
+                
+            cur_col += 1
+        cur_row, cur_col = cur_row + 1, 0
             
     for row in map_graph.rows:
         print(''.join(row))
