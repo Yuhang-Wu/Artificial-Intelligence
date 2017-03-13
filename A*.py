@@ -91,11 +91,15 @@ class AStarFrontier(Frontier):
         self.FIFO += 1
         
     def __iter__(self):
+        return self
+    
+    def __next__(self):
         while len(self.container) > 0:
             solution = heapq.heappop(self.container)[-1]   
             if solution[-1].head not in self.visited:
                 self.visited.append(solution[-1].head)
-                yield solution
+                return solution
+        raise StopIteration();
 
 
 class LCFSFrontier(Frontier):
