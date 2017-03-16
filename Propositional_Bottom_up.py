@@ -31,7 +31,7 @@ def forward_deduce(KB):
     logical = set()
     no_more_clause = False
     
-    while !no_more_clause:
+    while not no_more_clause:
         no_more_clause = True
        
         for head, body in list(clauses(KB)):
