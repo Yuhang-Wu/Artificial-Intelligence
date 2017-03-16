@@ -29,15 +29,15 @@ def forward_deduce(KB):
     kb = list(clauses(KB))
     print(kb)
     logical = set()
-    check = True
+    no_more_clause = False
     
-    while check:
-        check = False
+    while !no_more_clause:
+        no_more_clause = True
        
         for head, body in list(clauses(KB)):
             if all(atom in logical for atom in body) and (head not in logical):
                 logical.add(head)
-                check = True
+                no_more_clause = False
     
     return logical
 
