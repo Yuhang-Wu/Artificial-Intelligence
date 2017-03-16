@@ -29,44 +29,50 @@ def forward_deduce(KB):
     kb = list(clauses(KB))
     print(kb)
     logical = set()
-    no_more_clauses = True
+    check = True
     
-    while no_more_clauses:
-        no_more_clauses = False
+    while check:
+        check = False
        
         for head, body in list(clauses(KB)):
             if all(atom in logical for atom in body) and (head not in logical):
                 logical.add(head)
-                no_more_clauses = True
+                check = True
     
     return logical
-        
-kb = """
-a :- b.
-b.
-"""
+
+
+def main():
     
-print(", ".join(sorted(forward_deduce(kb))))
+    kb = """
+    a :- b.
+    b.
+    """
+
+    print(", ".join(sorted(forward_deduce(kb))))
 
 
-kb = """
-wet :- is_raining.
-wet :- sprinkler_is_going.
-wet.
-"""
+    kb = """
+    wet :- is_raining.
+    wet :- sprinkler_is_going.
+    wet.
+    """
 
-print(len(forward_deduce(kb)))
+    print(len(forward_deduce(kb)))
 
 
-kb = """
-a :- b, c.
-b :- d, e.
-b :- g, e.
-c :- e.
-d.
-e.
-f :- a,
-     g.
-"""
+    kb = """
+    a :- b, c.
+    b :- d, e.
+    b :- g, e.
+    c :- e.
+    d.
+    e.
+    f :- a,
+         g.
+    """
 
-print(", ".join(sorted(forward_deduce(kb))))
+    print(", ".join(sorted(forward_deduce(kb))))
+    
+if __name__ == '__main__':
+    main()
