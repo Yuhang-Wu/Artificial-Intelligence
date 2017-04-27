@@ -52,3 +52,5 @@ insert_at(X, L, 0, [X|L]).
 insert_at(X, [H|T], N, [H|L]) :- N > 0, K is N - 1, insert_at(X, T, K, L).
 
 /* create a list containing all integers within a range */
+range(Min, Max, [Min]) :- Min = Max.
+range(Min, Max, [Min|L]) :- Min < Max, X is Min + 1, range(X, Max, L).
