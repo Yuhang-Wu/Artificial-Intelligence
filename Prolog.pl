@@ -206,28 +206,24 @@ fib(N,X):- K is N-1, fib(K,Nums), reverse(Nums,[A,B|_]), Var is A+B, append(Nums
 % rle([a, a, b, c, c, c], X). --> X = [(a,2), (b,1), (c,3)].
 
 rle([],[]).
-rle([X|Xs],[Z|Zs]) :- count(X,Xs,Ys,1,Z), rle(Ys,Zs).
+rle([Hx|Tx],[Hz|Tz]) :- counter(Hx,Tx,Ty,1,Hz), rle(Ty,Tz).
 
-count(X,[],[],1,(X,1)).
-count(X,[],[],N,(X,N)) :- N > 1.
-
-count(X,[Y|Ys],[Y|Ys],1,(X,1)) :- X \= Y.
-count(X,[Y|Ys],[Y|Ys],N,(X,N)) :- N > 1, X \= Y.
-count(X,[X|Xs],Ys,K,T) :- K1 is K + 1, count(X,Xs,Ys,K1,T).
+counter(Hx,[],[],N,(Hx,N)).
+counter(Hx,[Hx|Tx],Ty,K,Hz) :- K1 is K+1, counter(Hx,Tx,Ty,K1,Hz).
+counter(Hx,[Hy|Ty],[Hy|Ty],N,(Hx,N)) :- Hx \= Hy.
 
 /* Anoter way to solve it */
 
-encode(L1,L2) :- pack(L1,L), transform(L,L2).
-
-transform([],[]).
-transform([[X|Xs]|Ys],[(X,N)|Zs]) :- length([X|Xs],N), transform(Ys,Zs).
+rle(L1,L2) :- pack(L1,L), encode_helper(L,L2).
+encode_helper([],[]).
+encode_helper([[Hx|Tx]|Ty], [(Hx,N)|Tz]) :- length([Hx|Tx],N), encode_helper(Ty,Tz).
 
 pack([],[]).
-pack([X|Xs],[Z|Zs]) :- transfer(X,Xs,Ys,Z), pack(Ys,Zs).
+pack([Hx|Tx],[Hz|Tz]) :- pack_helper(Hx,Tx,Ty,Hz), pack(Ty,Tz).
 
-transfer(X,[],[],[X]).
-transfer(X,[Y|Ys],[Y|Ys],[X]) :- X \= Y.
-transfer(X,[X|Xs],Ys,[X|Zs]) :- transfer(X,Xs,Ys,Zs).
+pack_helper(Hx,[],[],[Hx]).
+pack_helper(Hx,[Hy|Ty],[Hy|Ty],[Hx]):- Hy \= Hx.
+pack_helper(Hx,[Hx|Tx],Ty,[Hx|Hz]):- pack_helper(Hx,Tx,Ty,Hz).
 
 /* ------------------------------------------------------------------------------------------------------------------------- */
 % Write a predicate cartesian_product(?A, ?B, ?AcrossB) that forms the cartesian product of two lists.
