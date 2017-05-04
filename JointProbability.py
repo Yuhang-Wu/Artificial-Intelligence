@@ -1,3 +1,9 @@
+""" Write a function joint_prob(network, assignment) that 
+    given a belief network and a complete assignment of all the variables in the network, 
+    returns the probability of the assignment (being true). The data structure of the network is as described above. 
+    The assignment is a dictionary where keys are the variable names and the values are either True or False.
+"""
+
 def joint_prob(network, assignment):
     
     probability = 1
