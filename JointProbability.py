@@ -19,7 +19,7 @@ def joint_prob(network, assignment):
     return probability
 
 def main():  
-    
+    # --------------- --------------- test for joint_prob(network, assignment) --------------- ---------------
     network = {
         'A': {
             'Parents': [],
@@ -118,6 +118,10 @@ def main():
                              'Alarm': True, 'Burglary': False,
                              'Earthquake': False})
     print("{:.8f}".format(p))      
+    
+    # --------------- --------------- test for query(network, query_var, evidence) --------------- ---------------
+    
+    
     
 if __name__ == '__main__':
     main()
