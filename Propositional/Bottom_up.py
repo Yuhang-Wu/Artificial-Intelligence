@@ -52,7 +52,7 @@ def main():
     f :- a,
          g.
     """
-   
+    
     print(", ".join(sorted(forward_deduce(kb))))
     
 if __name__ == '__main__':
