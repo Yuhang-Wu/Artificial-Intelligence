@@ -8,15 +8,10 @@
 
 def accuracy(predicted_labels, correct_labels):
     
-    correct = 0
-    total = len(predicted_labels)
+    correct = [i for i in range(len(predicted_labels)) if predicted_labels[i] ==correct_labels[i]]
+    
+    return len(correct) / len(correct_labels)
 
-    for n, predict in enumerate(predicted_labels):
-        if predict == correct_labels[n]:
-            correct += 1
-   
-    answer = correct / total
-    return answer
 
 def main():
     print(accuracy((True, True, True, False),
