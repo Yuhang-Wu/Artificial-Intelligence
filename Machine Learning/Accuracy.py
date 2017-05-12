@@ -8,9 +8,7 @@
 
 def accuracy(predicted_labels, correct_labels):
     
-    correct = [n for n in range(len(predicted_labels)) if predicted_labels[n] == correct_labels[n]]
-    
-    return len(correct) / len(correct_labels)
+    return len([n for n in range(len(predicted_labels)) if predicted_labels[n] == correct_labels[n]]) / len(correct_labels)
 
 
 def main():
