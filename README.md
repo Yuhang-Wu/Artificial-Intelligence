@@ -1,2 +1,2 @@
-#COSC 367
+# COSC 367
 Artificial Intelligence
