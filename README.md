@@ -1,8 +1,6 @@
 # COSC 367 Artificial Intelligence
 
-***
-
-# Description
+## Description
 
 This course introduces important concepts in computational intelligence and demonstrates how they are used to solve problems that are normally difficult or intractable by conventional means. Topics covered include algorithms, techniques, and languages commonly used in artificial intelligence, knowledge representations and reasoning, and bio-inspired computing.
 
@@ -21,9 +19,7 @@ The course covers core topics in AI including:
 - consistency algorithms,
 - local search and heuristic algorithms such as simulated annealing, and population-based algorithms such as genetic search and swarm optimisation.
 
-***
-
-# Learning Outcomes
+## Learning Outcomes
 
 Having successfully completed the course, you will be able to:
 
